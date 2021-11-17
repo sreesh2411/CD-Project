@@ -3,6 +3,8 @@ This repository contains the files and folders of the project of course Compiler
 
 ## Directory Structure
 CD-Project
+
+`
 ├── PHASE-1
     ├── Phase-LexAnalysis
     └── Phase-SyntaxAnalysis
