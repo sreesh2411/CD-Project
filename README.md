@@ -3,6 +3,7 @@ This repository contains the files and folders of the project of course Compiler
 
 ### Directory Structure
 
+```bash
 ├── PHASE-1
     ├── Phase-LexAnalysis
     └── Phase-SyntaxAnalysis
@@ -15,6 +16,7 @@ This repository contains the files and folders of the project of course Compiler
         ├── final 
         ├── practice files 
     └── Phase-ICG
+```
     
  .
     ├── build                   # Compiled files (alternatively `dist`)
