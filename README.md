@@ -1,10 +1,8 @@
 # CD-Project
 This repository contains the files and folders of the project of course Compiler Design (UE18CS351).<br><br>
 
-## Directory Structure
-CD-Project
+### Directory Structure
 
-`
 ├── PHASE-1
     ├── Phase-LexAnalysis
     └── Phase-SyntaxAnalysis
@@ -17,6 +15,15 @@ CD-Project
         ├── final 
         ├── practice files 
     └── Phase-ICG
+    
+ .
+    ├── build                   # Compiled files (alternatively `dist`)
+    ├── docs                    # Documentation files (alternatively `doc`)
+    ├── src                     # Source files (alternatively `lib` or `app`)
+    ├── test                    # Automated tests (alternatively `spec` or `tests`)
+    ├── tools                   # Tools and utilities
+    ├── LICENSE
+    └── README.md
        
         
         
