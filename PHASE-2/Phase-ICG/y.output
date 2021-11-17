@@ -1,0 +1,2727 @@
+Rules useless in parser due to conflicts
+
+   49 S1: assign
+   50   | M ID TER
+   51   | S S
+
+   52 $@19: %empty
+
+   54 $@20: %empty
+
+   56 S1: %empty
+
+   62 S2: assign
+   63   | M ID TER
+   64   | S S
+
+   65 $@25: %empty
+
+   67 $@26: %empty
+
+   69 S2: %empty
+
+
+State 9 conflicts: 1 shift/reduce
+State 37 conflicts: 1 shift/reduce
+State 41 conflicts: 9 shift/reduce, 22 reduce/reduce
+State 48 conflicts: 2 reduce/reduce
+State 49 conflicts: 2 reduce/reduce
+State 51 conflicts: 9 shift/reduce, 24 reduce/reduce
+State 54 conflicts: 22 reduce/reduce
+State 68 conflicts: 9 shift/reduce, 55 reduce/reduce
+State 81 conflicts: 22 reduce/reduce
+State 172 conflicts: 9 shift/reduce, 20 reduce/reduce
+State 173 conflicts: 9 shift/reduce, 20 reduce/reduce
+State 177 conflicts: 10 shift/reduce, 20 reduce/reduce
+State 178 conflicts: 10 shift/reduce, 20 reduce/reduce
+State 191 conflicts: 9 shift/reduce, 20 reduce/reduce
+State 192 conflicts: 10 shift/reduce, 20 reduce/reduce
+
+
+Grammar
+
+    0 $accept: P $end
+
+    1 $@1: %empty
+
+    2 $@2: %empty
+
+    3 $@3: %empty
+
+    4 $@4: %empty
+
+    5 $@5: %empty
+
+    6 P: I M ID $@1 '(' $@2 R ')' $@3 '{' $@4 S $@5 U '}'
+
+    7 I: I I
+    8  | INCLUDE
+
+    9 M: INT
+   10  | FLOAT
+   11  | CHAR
+   12  | VOID
+
+   13 $@6: %empty
+
+   14 R: R ',' $@6 R
+   15  | M N TER
+   16  | N TER
+
+   17 TER: ';'
+   18    | %empty
+
+   19 $@7: %empty
+
+   20 N: ID $@7 G
+
+   21 $@8: %empty
+
+   22 N: '*' $@8 N
+
+   23 $@9: %empty
+
+   24 $@10: %empty
+
+   25 G: '[' $@9 NUM $@10 ']' G
+   26  | '[' ID ']' G
+
+   27 $@11: %empty
+
+   28 G: '[' $@11 ']' G
+   29  | %empty
+
+   30 $@12: %empty
+
+   31 U: RETURN NUM $@12 ';'
+   32  | RETURN ID ';'
+   33  | %empty
+
+   34 S: S1
+   35  | S2
+   36  | assign
+   37  | M ID TER
+   38  | S S
+
+   39 $@13: %empty
+
+   40 S: printff $@13 '(' STRLT ')' ';'
+
+   41 $@14: %empty
+
+   42 S: scanff $@14 '(' STRLT ',' '&' ID ')' ';'
+   43  | %empty
+
+   44 $@15: %empty
+
+   45 $@16: %empty
+
+   46 $@17: %empty
+
+   47 $@18: %empty
+
+   48 S1: IF $@15 '(' C ')' $@16 '{' $@17 S '}' $@18 EL
+   49   | assign
+   50   | M ID TER
+   51   | S S
+
+   52 $@19: %empty
+
+   53 S1: printff $@19 '(' STRLT ')' ';'
+
+   54 $@20: %empty
+
+   55 S1: scanff $@20 '(' STRLT ',' '&' ID ')' ';'
+   56   | %empty
+
+   57 $@21: %empty
+
+   58 $@22: %empty
+
+   59 $@23: %empty
+
+   60 $@24: %empty
+
+   61 S2: WHILE $@21 '(' C ')' $@22 '{' $@23 S '}' $@24 EL
+   62   | assign
+   63   | M ID TER
+   64   | S S
+
+   65 $@25: %empty
+
+   66 S2: printff $@25 '(' STRLT ')' ';'
+
+   67 $@26: %empty
+
+   68 S2: scanff $@26 '(' STRLT ',' '&' ID ')' ';'
+   69   | %empty
+
+   70 $@27: %empty
+
+   71 $@28: %empty
+
+   72 EL: ELSE $@27 '{' $@28 S '}'
+   73   | %empty
+
+   74 Arg: STRLT
+
+   75 C: C AND B
+   76  | C OR B
+   77  | NE B
+   78  | B
+
+   79 B: E relop E
+
+   80 $@29: %empty
+
+   81 B: ID '=' $@29 E
+   82  | FL
+   83  | TR
+   84  | ID
+   85  | NUM
+
+   86 $@30: %empty
+
+   87 assign: ID '=' $@30 E ';'
+   88       | ID '(' Arg ')' ';'
+
+   89 $@31: %empty
+
+   90 E: E '+' $@31 E
+
+   91 $@32: %empty
+
+   92 E: E '-' $@32 E
+   93  | F
+
+   94 $@33: %empty
+
+   95 F: F '*' $@33 F
+
+   96 $@34: %empty
+
+   97 F: F '/' $@34 F
+   98  | T
+
+   99 $@35: %empty
+
+  100 T: T '^' $@35 T
+  101  | Q
+
+  102 $@36: %empty
+
+  103 Q: '(' $@36 E ')'
+
+  104 $@37: %empty
+
+  105 Q: ID $@37 G
+
+  106 $@38: %empty
+
+  107 Q: NUM $@38
+
+  108 relop: LE
+  109      | GE
+  110      | LT
+  111      | GT
+  112      | EQ
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '&' (38) 42 55 68
+    '(' (40) 6 40 42 48 53 55 61 66 68 88 103
+    ')' (41) 6 40 42 48 53 55 61 66 68 88 103
+    '*' (42) 22 95
+    '+' (43) 90
+    ',' (44) 14 42 55 68
+    '-' (45) 92
+    '/' (47) 97
+    ';' (59) 17 31 32 40 42 53 55 66 68 87 88
+    '=' (61) 81 87
+    '[' (91) 25 26 28
+    ']' (93) 25 26 28
+    '^' (94) 100
+    '{' (123) 6 48 61 72
+    '}' (125) 6 48 61 72
+    error (256)
+    IF <nam> (258) 48
+    ELSE <nam> (259) 72
+    INT <nam> (260) 9
+    FLOAT <nam> (261) 10
+    CHAR <nam> (262) 11
+    WHILE <nam> (263) 61
+    VOID (264) 12
+    INCLUDE (265) 8
+    RETURN (266) 31 32
+    LE <nam> (267) 108
+    GE <nam> (268) 109
+    LT <nam> (269) 110
+    GT <nam> (270) 111
+    EQ <nam> (271) 112
+    NE <nam> (272) 77
+    NUM <nam> (273) 25 31 85 107
+    AND <nam> (274) 75
+    OR <nam> (275) 76
+    TR <nam> (276) 83
+    FL <nam> (277) 82
+    STRLT <nam> (278) 40 42 53 55 66 68 74
+    ID <nam> (279) 6 20 26 32 37 42 50 55 63 68 81 84 87 88 105
+    printff <nam> (280) 40 53 66
+    scanff <nam> (281) 42 55 68
+
+
+Nonterminals, with rules where they appear
+
+    $accept (42)
+        on left: 0
+    P <nam> (43)
+        on left: 6
+        on right: 0
+    $@1 (44)
+        on left: 1
+        on right: 6
+    $@2 (45)
+        on left: 2
+        on right: 6
+    $@3 (46)
+        on left: 3
+        on right: 6
+    $@4 (47)
+        on left: 4
+        on right: 6
+    $@5 (48)
+        on left: 5
+        on right: 6
+    I <nam> (49)
+        on left: 7 8
+        on right: 6 7
+    M <nam> (50)
+        on left: 9 10 11 12
+        on right: 6 15 37 50 63
+    R <nam> (51)
+        on left: 14 15 16
+        on right: 6 14
+    $@6 (52)
+        on left: 13
+        on right: 14
+    TER <nam> (53)
+        on left: 17 18
+        on right: 15 16 37 50 63
+    N <nam> (54)
+        on left: 20 22
+        on right: 15 16 22
+    $@7 (55)
+        on left: 19
+        on right: 20
+    $@8 (56)
+        on left: 21
+        on right: 22
+    G <nam> (57)
+        on left: 25 26 28 29
+        on right: 20 25 26 28 105
+    $@9 (58)
+        on left: 23
+        on right: 25
+    $@10 (59)
+        on left: 24
+        on right: 25
+    $@11 (60)
+        on left: 27
+        on right: 28
+    U <nam> (61)
+        on left: 31 32 33
+        on right: 6
+    $@12 (62)
+        on left: 30
+        on right: 31
+    S <nam> (63)
+        on left: 34 35 36 37 38 40 42 43
+        on right: 6 38 48 51 61 64 72
+    $@13 (64)
+        on left: 39
+        on right: 40
+    $@14 (65)
+        on left: 41
+        on right: 42
+    S1 <nam> (66)
+        on left: 48 49 50 51 53 55 56
+        on right: 34
+    $@15 (67)
+        on left: 44
+        on right: 48
+    $@16 (68)
+        on left: 45
+        on right: 48
+    $@17 (69)
+        on left: 46
+        on right: 48
+    $@18 (70)
+        on left: 47
+        on right: 48
+    $@19 (71)
+        on left: 52
+        on right: 53
+    $@20 (72)
+        on left: 54
+        on right: 55
+    S2 <nam> (73)
+        on left: 61 62 63 64 66 68 69
+        on right: 35
+    $@21 (74)
+        on left: 57
+        on right: 61
+    $@22 (75)
+        on left: 58
+        on right: 61
+    $@23 (76)
+        on left: 59
+        on right: 61
+    $@24 (77)
+        on left: 60
+        on right: 61
+    $@25 (78)
+        on left: 65
+        on right: 66
+    $@26 (79)
+        on left: 67
+        on right: 68
+    EL <nam> (80)
+        on left: 72 73
+        on right: 48 61
+    $@27 (81)
+        on left: 70
+        on right: 72
+    $@28 (82)
+        on left: 71
+        on right: 72
+    Arg <nam> (83)
+        on left: 74
+        on right: 88
+    C <gen> (84)
+        on left: 75 76 77 78
+        on right: 48 61 75 76
+    B <gen> (85)
+        on left: 79 81 82 83 84 85
+        on right: 75 76 77 78
+    $@29 (86)
+        on left: 80
+        on right: 81
+    assign <nam> (87)
+        on left: 87 88
+        on right: 36 49 62
+    $@30 (88)
+        on left: 86
+        on right: 87
+    E <nam> (89)
+        on left: 90 92 93
+        on right: 79 81 87 90 92 103
+    $@31 (90)
+        on left: 89
+        on right: 90
+    $@32 (91)
+        on left: 91
+        on right: 92
+    F <nam> (92)
+        on left: 95 97 98
+        on right: 93 95 97
+    $@33 (93)
+        on left: 94
+        on right: 95
+    $@34 (94)
+        on left: 96
+        on right: 97
+    T <nam> (95)
+        on left: 100 101
+        on right: 98 100
+    $@35 (96)
+        on left: 99
+        on right: 100
+    Q <nam> (97)
+        on left: 103 105 107
+        on right: 101
+    $@36 (98)
+        on left: 102
+        on right: 103
+    $@37 (99)
+        on left: 104
+        on right: 105
+    $@38 (100)
+        on left: 106
+        on right: 107
+    relop <nam> (101)
+        on left: 108 109 110 111 112
+        on right: 79
+
+
+State 0
+
+    0 $accept: . P $end
+
+    INCLUDE  shift, and go to state 1
+
+    P  go to state 2
+    I  go to state 3
+
+
+State 1
+
+    8 I: INCLUDE .
+
+    $default  reduce using rule 8 (I)
+
+
+State 2
+
+    0 $accept: P . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    6 P: I . M ID $@1 '(' $@2 R ')' $@3 '{' $@4 S $@5 U '}'
+    7 I: I . I
+
+    INT      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    CHAR     shift, and go to state 7
+    VOID     shift, and go to state 8
+    INCLUDE  shift, and go to state 1
+
+    I  go to state 9
+    M  go to state 10
+
+
+State 4
+
+    0 $accept: P $end .
+
+    $default  accept
+
+
+State 5
+
+    9 M: INT .
+
+    $default  reduce using rule 9 (M)
+
+
+State 6
+
+   10 M: FLOAT .
+
+    $default  reduce using rule 10 (M)
+
+
+State 7
+
+   11 M: CHAR .
+
+    $default  reduce using rule 11 (M)
+
+
+State 8
+
+   12 M: VOID .
+
+    $default  reduce using rule 12 (M)
+
+
+State 9
+
+    7 I: I . I
+    7  | I I .
+
+    INCLUDE  shift, and go to state 1
+
+    INCLUDE   [reduce using rule 7 (I)]
+    $default  reduce using rule 7 (I)
+
+    I  go to state 9
+
+
+State 10
+
+    6 P: I M . ID $@1 '(' $@2 R ')' $@3 '{' $@4 S $@5 U '}'
+
+    ID  shift, and go to state 11
+
+
+State 11
+
+    6 P: I M ID . $@1 '(' $@2 R ')' $@3 '{' $@4 S $@5 U '}'
+
+    $default  reduce using rule 1 ($@1)
+
+    $@1  go to state 12
+
+
+State 12
+
+    6 P: I M ID $@1 . '(' $@2 R ')' $@3 '{' $@4 S $@5 U '}'
+
+    '('  shift, and go to state 13
+
+
+State 13
+
+    6 P: I M ID $@1 '(' . $@2 R ')' $@3 '{' $@4 S $@5 U '}'
+
+    $default  reduce using rule 2 ($@2)
+
+    $@2  go to state 14
+
+
+State 14
+
+    6 P: I M ID $@1 '(' $@2 . R ')' $@3 '{' $@4 S $@5 U '}'
+
+    INT    shift, and go to state 5
+    FLOAT  shift, and go to state 6
+    CHAR   shift, and go to state 7
+    VOID   shift, and go to state 8
+    ID     shift, and go to state 15
+    '*'    shift, and go to state 16
+
+    M  go to state 17
+    R  go to state 18
+    N  go to state 19
+
+
+State 15
+
+   20 N: ID . $@7 G
+
+    $default  reduce using rule 19 ($@7)
+
+    $@7  go to state 20
+
+
+State 16
+
+   22 N: '*' . $@8 N
+
+    $default  reduce using rule 21 ($@8)
+
+    $@8  go to state 21
+
+
+State 17
+
+   15 R: M . N TER
+
+    ID   shift, and go to state 15
+    '*'  shift, and go to state 16
+
+    N  go to state 22
+
+
+State 18
+
+    6 P: I M ID $@1 '(' $@2 R . ')' $@3 '{' $@4 S $@5 U '}'
+   14 R: R . ',' $@6 R
+
+    ')'  shift, and go to state 23
+    ','  shift, and go to state 24
+
+
+State 19
+
+   16 R: N . TER
+
+    ';'  shift, and go to state 25
+
+    $default  reduce using rule 18 (TER)
+
+    TER  go to state 26
+
+
+State 20
+
+   20 N: ID $@7 . G
+
+    '['  shift, and go to state 27
+
+    $default  reduce using rule 29 (G)
+
+    G  go to state 28
+
+
+State 21
+
+   22 N: '*' $@8 . N
+
+    ID   shift, and go to state 15
+    '*'  shift, and go to state 16
+
+    N  go to state 29
+
+
+State 22
+
+   15 R: M N . TER
+
+    ';'  shift, and go to state 25
+
+    $default  reduce using rule 18 (TER)
+
+    TER  go to state 30
+
+
+State 23
+
+    6 P: I M ID $@1 '(' $@2 R ')' . $@3 '{' $@4 S $@5 U '}'
+
+    $default  reduce using rule 3 ($@3)
+
+    $@3  go to state 31
+
+
+State 24
+
+   14 R: R ',' . $@6 R
+
+    $default  reduce using rule 13 ($@6)
+
+    $@6  go to state 32
+
+
+State 25
+
+   17 TER: ';' .
+
+    $default  reduce using rule 17 (TER)
+
+
+State 26
+
+   16 R: N TER .
+
+    $default  reduce using rule 16 (R)
+
+
+State 27
+
+   25 G: '[' . $@9 NUM $@10 ']' G
+   26  | '[' . ID ']' G
+   28  | '[' . $@11 ']' G
+
+    ID  shift, and go to state 33
+
+    ']'       reduce using rule 27 ($@11)
+    $default  reduce using rule 23 ($@9)
+
+    $@9   go to state 34
+    $@11  go to state 35
+
+
+State 28
+
+   20 N: ID $@7 G .
+
+    $default  reduce using rule 20 (N)
+
+
+State 29
+
+   22 N: '*' $@8 N .
+
+    $default  reduce using rule 22 (N)
+
+
+State 30
+
+   15 R: M N TER .
+
+    $default  reduce using rule 15 (R)
+
+
+State 31
+
+    6 P: I M ID $@1 '(' $@2 R ')' $@3 . '{' $@4 S $@5 U '}'
+
+    '{'  shift, and go to state 36
+
+
+State 32
+
+   14 R: R ',' $@6 . R
+
+    INT    shift, and go to state 5
+    FLOAT  shift, and go to state 6
+    CHAR   shift, and go to state 7
+    VOID   shift, and go to state 8
+    ID     shift, and go to state 15
+    '*'    shift, and go to state 16
+
+    M  go to state 17
+    R  go to state 37
+    N  go to state 19
+
+
+State 33
+
+   26 G: '[' ID . ']' G
+
+    ']'  shift, and go to state 38
+
+
+State 34
+
+   25 G: '[' $@9 . NUM $@10 ']' G
+
+    NUM  shift, and go to state 39
+
+
+State 35
+
+   28 G: '[' $@11 . ']' G
+
+    ']'  shift, and go to state 40
+
+
+State 36
+
+    6 P: I M ID $@1 '(' $@2 R ')' $@3 '{' . $@4 S $@5 U '}'
+
+    $default  reduce using rule 4 ($@4)
+
+    $@4  go to state 41
+
+
+State 37
+
+   14 R: R . ',' $@6 R
+   14  | R ',' $@6 R .
+
+    ','  shift, and go to state 24
+
+    ','       [reduce using rule 14 (R)]
+    $default  reduce using rule 14 (R)
+
+
+State 38
+
+   26 G: '[' ID ']' . G
+
+    '['  shift, and go to state 27
+
+    $default  reduce using rule 29 (G)
+
+    G  go to state 42
+
+
+State 39
+
+   25 G: '[' $@9 NUM . $@10 ']' G
+
+    $default  reduce using rule 24 ($@10)
+
+    $@10  go to state 43
+
+
+State 40
+
+   28 G: '[' $@11 ']' . G
+
+    '['  shift, and go to state 27
+
+    $default  reduce using rule 29 (G)
+
+    G  go to state 44
+
+
+State 41
+
+    6 P: I M ID $@1 '(' $@2 R ')' $@3 '{' $@4 . S $@5 U '}'
+
+    IF       shift, and go to state 45
+    INT      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    CHAR     shift, and go to state 7
+    WHILE    shift, and go to state 46
+    VOID     shift, and go to state 8
+    ID       shift, and go to state 47
+    printff  shift, and go to state 48
+    scanff   shift, and go to state 49
+
+    IF        [reduce using rule 43 (S)]
+    IF        [reduce using rule 56 (S1)]
+    IF        [reduce using rule 69 (S2)]
+    INT       [reduce using rule 43 (S)]
+    INT       [reduce using rule 56 (S1)]
+    INT       [reduce using rule 69 (S2)]
+    FLOAT     [reduce using rule 43 (S)]
+    FLOAT     [reduce using rule 56 (S1)]
+    FLOAT     [reduce using rule 69 (S2)]
+    CHAR      [reduce using rule 43 (S)]
+    CHAR      [reduce using rule 56 (S1)]
+    CHAR      [reduce using rule 69 (S2)]
+    WHILE     [reduce using rule 43 (S)]
+    WHILE     [reduce using rule 56 (S1)]
+    WHILE     [reduce using rule 69 (S2)]
+    VOID      [reduce using rule 43 (S)]
+    VOID      [reduce using rule 56 (S1)]
+    VOID      [reduce using rule 69 (S2)]
+    RETURN    reduce using rule 43 (S)
+    RETURN    [reduce using rule 56 (S1)]
+    RETURN    [reduce using rule 69 (S2)]
+    ID        [reduce using rule 43 (S)]
+    ID        [reduce using rule 56 (S1)]
+    ID        [reduce using rule 69 (S2)]
+    printff   [reduce using rule 43 (S)]
+    printff   [reduce using rule 56 (S1)]
+    printff   [reduce using rule 69 (S2)]
+    scanff    [reduce using rule 43 (S)]
+    scanff    [reduce using rule 56 (S1)]
+    scanff    [reduce using rule 69 (S2)]
+    '}'       reduce using rule 43 (S)
+    '}'       [reduce using rule 56 (S1)]
+    '}'       [reduce using rule 69 (S2)]
+    $default  reduce using rule 43 (S)
+
+    M       go to state 50
+    S       go to state 51
+    S1      go to state 52
+    S2      go to state 53
+    assign  go to state 54
+
+
+State 42
+
+   26 G: '[' ID ']' G .
+
+    $default  reduce using rule 26 (G)
+
+
+State 43
+
+   25 G: '[' $@9 NUM $@10 . ']' G
+
+    ']'  shift, and go to state 55
+
+
+State 44
+
+   28 G: '[' $@11 ']' G .
+
+    $default  reduce using rule 28 (G)
+
+
+State 45
+
+   48 S1: IF . $@15 '(' C ')' $@16 '{' $@17 S '}' $@18 EL
+
+    $default  reduce using rule 44 ($@15)
+
+    $@15  go to state 56
+
+
+State 46
+
+   61 S2: WHILE . $@21 '(' C ')' $@22 '{' $@23 S '}' $@24 EL
+
+    $default  reduce using rule 57 ($@21)
+
+    $@21  go to state 57
+
+
+State 47
+
+   87 assign: ID . '=' $@30 E ';'
+   88       | ID . '(' Arg ')' ';'
+
+    '='  shift, and go to state 58
+    '('  shift, and go to state 59
+
+
+State 48
+
+   40 S: printff . $@13 '(' STRLT ')' ';'
+   53 S1: printff . $@19 '(' STRLT ')' ';'
+   66 S2: printff . $@25 '(' STRLT ')' ';'
+
+    '('       reduce using rule 39 ($@13)
+    '('       [reduce using rule 52 ($@19)]
+    '('       [reduce using rule 65 ($@25)]
+    $default  reduce using rule 39 ($@13)
+
+    $@13  go to state 60
+    $@19  go to state 61
+    $@25  go to state 62
+
+
+State 49
+
+   42 S: scanff . $@14 '(' STRLT ',' '&' ID ')' ';'
+   55 S1: scanff . $@20 '(' STRLT ',' '&' ID ')' ';'
+   68 S2: scanff . $@26 '(' STRLT ',' '&' ID ')' ';'
+
+    '('       reduce using rule 41 ($@14)
+    '('       [reduce using rule 54 ($@20)]
+    '('       [reduce using rule 67 ($@26)]
+    $default  reduce using rule 41 ($@14)
+
+    $@14  go to state 63
+    $@20  go to state 64
+    $@26  go to state 65
+
+
+State 50
+
+   37 S: M . ID TER
+   50 S1: M . ID TER
+   63 S2: M . ID TER
+
+    ID  shift, and go to state 66
+
+
+State 51
+
+    6 P: I M ID $@1 '(' $@2 R ')' $@3 '{' $@4 S . $@5 U '}'
+   38 S: S . S
+   51 S1: S . S
+   64 S2: S . S
+
+    IF       shift, and go to state 45
+    INT      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    CHAR     shift, and go to state 7
+    WHILE    shift, and go to state 46
+    VOID     shift, and go to state 8
+    ID       shift, and go to state 47
+    printff  shift, and go to state 48
+    scanff   shift, and go to state 49
+
+    IF        [reduce using rule 43 (S)]
+    IF        [reduce using rule 56 (S1)]
+    IF        [reduce using rule 69 (S2)]
+    INT       [reduce using rule 43 (S)]
+    INT       [reduce using rule 56 (S1)]
+    INT       [reduce using rule 69 (S2)]
+    FLOAT     [reduce using rule 43 (S)]
+    FLOAT     [reduce using rule 56 (S1)]
+    FLOAT     [reduce using rule 69 (S2)]
+    CHAR      [reduce using rule 43 (S)]
+    CHAR      [reduce using rule 56 (S1)]
+    CHAR      [reduce using rule 69 (S2)]
+    WHILE     [reduce using rule 43 (S)]
+    WHILE     [reduce using rule 56 (S1)]
+    WHILE     [reduce using rule 69 (S2)]
+    VOID      [reduce using rule 43 (S)]
+    VOID      [reduce using rule 56 (S1)]
+    VOID      [reduce using rule 69 (S2)]
+    RETURN    reduce using rule 5 ($@5)
+    RETURN    [reduce using rule 43 (S)]
+    RETURN    [reduce using rule 56 (S1)]
+    RETURN    [reduce using rule 69 (S2)]
+    ID        [reduce using rule 43 (S)]
+    ID        [reduce using rule 56 (S1)]
+    ID        [reduce using rule 69 (S2)]
+    printff   [reduce using rule 43 (S)]
+    printff   [reduce using rule 56 (S1)]
+    printff   [reduce using rule 69 (S2)]
+    scanff    [reduce using rule 43 (S)]
+    scanff    [reduce using rule 56 (S1)]
+    scanff    [reduce using rule 69 (S2)]
+    '}'       reduce using rule 5 ($@5)
+    '}'       [reduce using rule 43 (S)]
+    '}'       [reduce using rule 56 (S1)]
+    '}'       [reduce using rule 69 (S2)]
+    $default  reduce using rule 5 ($@5)
+
+    $@5     go to state 67
+    M       go to state 50
+    S       go to state 68
+    S1      go to state 52
+    S2      go to state 53
+    assign  go to state 54
+
+
+State 52
+
+   34 S: S1 .
+
+    $default  reduce using rule 34 (S)
+
+
+State 53
+
+   35 S: S2 .
+
+    $default  reduce using rule 35 (S)
+
+
+State 54
+
+   36 S: assign .
+   49 S1: assign .
+   62 S2: assign .
+
+    IF        reduce using rule 36 (S)
+    IF        [reduce using rule 49 (S1)]
+    IF        [reduce using rule 62 (S2)]
+    INT       reduce using rule 36 (S)
+    INT       [reduce using rule 49 (S1)]
+    INT       [reduce using rule 62 (S2)]
+    FLOAT     reduce using rule 36 (S)
+    FLOAT     [reduce using rule 49 (S1)]
+    FLOAT     [reduce using rule 62 (S2)]
+    CHAR      reduce using rule 36 (S)
+    CHAR      [reduce using rule 49 (S1)]
+    CHAR      [reduce using rule 62 (S2)]
+    WHILE     reduce using rule 36 (S)
+    WHILE     [reduce using rule 49 (S1)]
+    WHILE     [reduce using rule 62 (S2)]
+    VOID      reduce using rule 36 (S)
+    VOID      [reduce using rule 49 (S1)]
+    VOID      [reduce using rule 62 (S2)]
+    RETURN    reduce using rule 36 (S)
+    RETURN    [reduce using rule 49 (S1)]
+    RETURN    [reduce using rule 62 (S2)]
+    ID        reduce using rule 36 (S)
+    ID        [reduce using rule 49 (S1)]
+    ID        [reduce using rule 62 (S2)]
+    printff   reduce using rule 36 (S)
+    printff   [reduce using rule 49 (S1)]
+    printff   [reduce using rule 62 (S2)]
+    scanff    reduce using rule 36 (S)
+    scanff    [reduce using rule 49 (S1)]
+    scanff    [reduce using rule 62 (S2)]
+    '}'       reduce using rule 36 (S)
+    '}'       [reduce using rule 49 (S1)]
+    '}'       [reduce using rule 62 (S2)]
+    $default  reduce using rule 36 (S)
+
+
+State 55
+
+   25 G: '[' $@9 NUM $@10 ']' . G
+
+    '['  shift, and go to state 27
+
+    $default  reduce using rule 29 (G)
+
+    G  go to state 69
+
+
+State 56
+
+   48 S1: IF $@15 . '(' C ')' $@16 '{' $@17 S '}' $@18 EL
+
+    '('  shift, and go to state 70
+
+
+State 57
+
+   61 S2: WHILE $@21 . '(' C ')' $@22 '{' $@23 S '}' $@24 EL
+
+    '('  shift, and go to state 71
+
+
+State 58
+
+   87 assign: ID '=' . $@30 E ';'
+
+    $default  reduce using rule 86 ($@30)
+
+    $@30  go to state 72
+
+
+State 59
+
+   88 assign: ID '(' . Arg ')' ';'
+
+    STRLT  shift, and go to state 73
+
+    Arg  go to state 74
+
+
+State 60
+
+   40 S: printff $@13 . '(' STRLT ')' ';'
+
+    '('  shift, and go to state 75
+
+
+State 61
+
+   53 S1: printff $@19 . '(' STRLT ')' ';'
+
+    '('  shift, and go to state 76
+
+
+State 62
+
+   66 S2: printff $@25 . '(' STRLT ')' ';'
+
+    '('  shift, and go to state 77
+
+
+State 63
+
+   42 S: scanff $@14 . '(' STRLT ',' '&' ID ')' ';'
+
+    '('  shift, and go to state 78
+
+
+State 64
+
+   55 S1: scanff $@20 . '(' STRLT ',' '&' ID ')' ';'
+
+    '('  shift, and go to state 79
+
+
+State 65
+
+   68 S2: scanff $@26 . '(' STRLT ',' '&' ID ')' ';'
+
+    '('  shift, and go to state 80
+
+
+State 66
+
+   37 S: M ID . TER
+   50 S1: M ID . TER
+   63 S2: M ID . TER
+
+    ';'  shift, and go to state 25
+
+    $default  reduce using rule 18 (TER)
+
+    TER  go to state 81
+
+
+State 67
+
+    6 P: I M ID $@1 '(' $@2 R ')' $@3 '{' $@4 S $@5 . U '}'
+
+    RETURN  shift, and go to state 82
+
+    $default  reduce using rule 33 (U)
+
+    U  go to state 83
+
+
+State 68
+
+   38 S: S . S
+   38  | S S .
+   51 S1: S . S
+   51   | S S .
+   64 S2: S . S
+   64   | S S .
+
+    IF       shift, and go to state 45
+    INT      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    CHAR     shift, and go to state 7
+    WHILE    shift, and go to state 46
+    VOID     shift, and go to state 8
+    ID       shift, and go to state 47
+    printff  shift, and go to state 48
+    scanff   shift, and go to state 49
+
+    IF        [reduce using rule 38 (S)]
+    IF        [reduce using rule 43 (S)]
+    IF        [reduce using rule 51 (S1)]
+    IF        [reduce using rule 56 (S1)]
+    IF        [reduce using rule 64 (S2)]
+    IF        [reduce using rule 69 (S2)]
+    INT       [reduce using rule 38 (S)]
+    INT       [reduce using rule 43 (S)]
+    INT       [reduce using rule 51 (S1)]
+    INT       [reduce using rule 56 (S1)]
+    INT       [reduce using rule 64 (S2)]
+    INT       [reduce using rule 69 (S2)]
+    FLOAT     [reduce using rule 38 (S)]
+    FLOAT     [reduce using rule 43 (S)]
+    FLOAT     [reduce using rule 51 (S1)]
+    FLOAT     [reduce using rule 56 (S1)]
+    FLOAT     [reduce using rule 64 (S2)]
+    FLOAT     [reduce using rule 69 (S2)]
+    CHAR      [reduce using rule 38 (S)]
+    CHAR      [reduce using rule 43 (S)]
+    CHAR      [reduce using rule 51 (S1)]
+    CHAR      [reduce using rule 56 (S1)]
+    CHAR      [reduce using rule 64 (S2)]
+    CHAR      [reduce using rule 69 (S2)]
+    WHILE     [reduce using rule 38 (S)]
+    WHILE     [reduce using rule 43 (S)]
+    WHILE     [reduce using rule 51 (S1)]
+    WHILE     [reduce using rule 56 (S1)]
+    WHILE     [reduce using rule 64 (S2)]
+    WHILE     [reduce using rule 69 (S2)]
+    VOID      [reduce using rule 38 (S)]
+    VOID      [reduce using rule 43 (S)]
+    VOID      [reduce using rule 51 (S1)]
+    VOID      [reduce using rule 56 (S1)]
+    VOID      [reduce using rule 64 (S2)]
+    VOID      [reduce using rule 69 (S2)]
+    RETURN    reduce using rule 38 (S)
+    RETURN    [reduce using rule 43 (S)]
+    RETURN    [reduce using rule 51 (S1)]
+    RETURN    [reduce using rule 56 (S1)]
+    RETURN    [reduce using rule 64 (S2)]
+    RETURN    [reduce using rule 69 (S2)]
+    ID        [reduce using rule 38 (S)]
+    ID        [reduce using rule 43 (S)]
+    ID        [reduce using rule 51 (S1)]
+    ID        [reduce using rule 56 (S1)]
+    ID        [reduce using rule 64 (S2)]
+    ID        [reduce using rule 69 (S2)]
+    printff   [reduce using rule 38 (S)]
+    printff   [reduce using rule 43 (S)]
+    printff   [reduce using rule 51 (S1)]
+    printff   [reduce using rule 56 (S1)]
+    printff   [reduce using rule 64 (S2)]
+    printff   [reduce using rule 69 (S2)]
+    scanff    [reduce using rule 38 (S)]
+    scanff    [reduce using rule 43 (S)]
+    scanff    [reduce using rule 51 (S1)]
+    scanff    [reduce using rule 56 (S1)]
+    scanff    [reduce using rule 64 (S2)]
+    scanff    [reduce using rule 69 (S2)]
+    '}'       reduce using rule 38 (S)
+    '}'       [reduce using rule 43 (S)]
+    '}'       [reduce using rule 51 (S1)]
+    '}'       [reduce using rule 56 (S1)]
+    '}'       [reduce using rule 64 (S2)]
+    '}'       [reduce using rule 69 (S2)]
+    $default  reduce using rule 38 (S)
+
+    M       go to state 50
+    S       go to state 68
+    S1      go to state 52
+    S2      go to state 53
+    assign  go to state 54
+
+
+State 69
+
+   25 G: '[' $@9 NUM $@10 ']' G .
+
+    $default  reduce using rule 25 (G)
+
+
+State 70
+
+   48 S1: IF $@15 '(' . C ')' $@16 '{' $@17 S '}' $@18 EL
+
+    NE   shift, and go to state 84
+    NUM  shift, and go to state 85
+    TR   shift, and go to state 86
+    FL   shift, and go to state 87
+    ID   shift, and go to state 88
+    '('  shift, and go to state 89
+
+    C  go to state 90
+    B  go to state 91
+    E  go to state 92
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 71
+
+   61 S2: WHILE $@21 '(' . C ')' $@22 '{' $@23 S '}' $@24 EL
+
+    NE   shift, and go to state 84
+    NUM  shift, and go to state 85
+    TR   shift, and go to state 86
+    FL   shift, and go to state 87
+    ID   shift, and go to state 88
+    '('  shift, and go to state 89
+
+    C  go to state 96
+    B  go to state 91
+    E  go to state 92
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 72
+
+   87 assign: ID '=' $@30 . E ';'
+
+    NUM  shift, and go to state 97
+    ID   shift, and go to state 98
+    '('  shift, and go to state 89
+
+    E  go to state 99
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 73
+
+   74 Arg: STRLT .
+
+    $default  reduce using rule 74 (Arg)
+
+
+State 74
+
+   88 assign: ID '(' Arg . ')' ';'
+
+    ')'  shift, and go to state 100
+
+
+State 75
+
+   40 S: printff $@13 '(' . STRLT ')' ';'
+
+    STRLT  shift, and go to state 101
+
+
+State 76
+
+   53 S1: printff $@19 '(' . STRLT ')' ';'
+
+    STRLT  shift, and go to state 102
+
+
+State 77
+
+   66 S2: printff $@25 '(' . STRLT ')' ';'
+
+    STRLT  shift, and go to state 103
+
+
+State 78
+
+   42 S: scanff $@14 '(' . STRLT ',' '&' ID ')' ';'
+
+    STRLT  shift, and go to state 104
+
+
+State 79
+
+   55 S1: scanff $@20 '(' . STRLT ',' '&' ID ')' ';'
+
+    STRLT  shift, and go to state 105
+
+
+State 80
+
+   68 S2: scanff $@26 '(' . STRLT ',' '&' ID ')' ';'
+
+    STRLT  shift, and go to state 106
+
+
+State 81
+
+   37 S: M ID TER .
+   50 S1: M ID TER .
+   63 S2: M ID TER .
+
+    IF        reduce using rule 37 (S)
+    IF        [reduce using rule 50 (S1)]
+    IF        [reduce using rule 63 (S2)]
+    INT       reduce using rule 37 (S)
+    INT       [reduce using rule 50 (S1)]
+    INT       [reduce using rule 63 (S2)]
+    FLOAT     reduce using rule 37 (S)
+    FLOAT     [reduce using rule 50 (S1)]
+    FLOAT     [reduce using rule 63 (S2)]
+    CHAR      reduce using rule 37 (S)
+    CHAR      [reduce using rule 50 (S1)]
+    CHAR      [reduce using rule 63 (S2)]
+    WHILE     reduce using rule 37 (S)
+    WHILE     [reduce using rule 50 (S1)]
+    WHILE     [reduce using rule 63 (S2)]
+    VOID      reduce using rule 37 (S)
+    VOID      [reduce using rule 50 (S1)]
+    VOID      [reduce using rule 63 (S2)]
+    RETURN    reduce using rule 37 (S)
+    RETURN    [reduce using rule 50 (S1)]
+    RETURN    [reduce using rule 63 (S2)]
+    ID        reduce using rule 37 (S)
+    ID        [reduce using rule 50 (S1)]
+    ID        [reduce using rule 63 (S2)]
+    printff   reduce using rule 37 (S)
+    printff   [reduce using rule 50 (S1)]
+    printff   [reduce using rule 63 (S2)]
+    scanff    reduce using rule 37 (S)
+    scanff    [reduce using rule 50 (S1)]
+    scanff    [reduce using rule 63 (S2)]
+    '}'       reduce using rule 37 (S)
+    '}'       [reduce using rule 50 (S1)]
+    '}'       [reduce using rule 63 (S2)]
+    $default  reduce using rule 37 (S)
+
+
+State 82
+
+   31 U: RETURN . NUM $@12 ';'
+   32  | RETURN . ID ';'
+
+    NUM  shift, and go to state 107
+    ID   shift, and go to state 108
+
+
+State 83
+
+    6 P: I M ID $@1 '(' $@2 R ')' $@3 '{' $@4 S $@5 U . '}'
+
+    '}'  shift, and go to state 109
+
+
+State 84
+
+   77 C: NE . B
+
+    NUM  shift, and go to state 85
+    TR   shift, and go to state 86
+    FL   shift, and go to state 87
+    ID   shift, and go to state 88
+    '('  shift, and go to state 89
+
+    B  go to state 110
+    E  go to state 92
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 85
+
+   85 B: NUM .
+  107 Q: NUM . $@38
+
+    AND       reduce using rule 85 (B)
+    OR        reduce using rule 85 (B)
+    ')'       reduce using rule 85 (B)
+    $default  reduce using rule 106 ($@38)
+
+    $@38  go to state 111
+
+
+State 86
+
+   83 B: TR .
+
+    $default  reduce using rule 83 (B)
+
+
+State 87
+
+   82 B: FL .
+
+    $default  reduce using rule 82 (B)
+
+
+State 88
+
+   81 B: ID . '=' $@29 E
+   84  | ID .
+  105 Q: ID . $@37 G
+
+    '='  shift, and go to state 112
+
+    AND       reduce using rule 84 (B)
+    OR        reduce using rule 84 (B)
+    ')'       reduce using rule 84 (B)
+    $default  reduce using rule 104 ($@37)
+
+    $@37  go to state 113
+
+
+State 89
+
+  103 Q: '(' . $@36 E ')'
+
+    $default  reduce using rule 102 ($@36)
+
+    $@36  go to state 114
+
+
+State 90
+
+   48 S1: IF $@15 '(' C . ')' $@16 '{' $@17 S '}' $@18 EL
+   75 C: C . AND B
+   76  | C . OR B
+
+    AND  shift, and go to state 115
+    OR   shift, and go to state 116
+    ')'  shift, and go to state 117
+
+
+State 91
+
+   78 C: B .
+
+    $default  reduce using rule 78 (C)
+
+
+State 92
+
+   79 B: E . relop E
+   90 E: E . '+' $@31 E
+   92  | E . '-' $@32 E
+
+    LE   shift, and go to state 118
+    GE   shift, and go to state 119
+    LT   shift, and go to state 120
+    GT   shift, and go to state 121
+    EQ   shift, and go to state 122
+    '+'  shift, and go to state 123
+    '-'  shift, and go to state 124
+
+    relop  go to state 125
+
+
+State 93
+
+   93 E: F .
+   95 F: F . '*' $@33 F
+   97  | F . '/' $@34 F
+
+    '*'  shift, and go to state 126
+    '/'  shift, and go to state 127
+
+    $default  reduce using rule 93 (E)
+
+
+State 94
+
+   98 F: T .
+  100 T: T . '^' $@35 T
+
+    '^'  shift, and go to state 128
+
+    $default  reduce using rule 98 (F)
+
+
+State 95
+
+  101 T: Q .
+
+    $default  reduce using rule 101 (T)
+
+
+State 96
+
+   61 S2: WHILE $@21 '(' C . ')' $@22 '{' $@23 S '}' $@24 EL
+   75 C: C . AND B
+   76  | C . OR B
+
+    AND  shift, and go to state 115
+    OR   shift, and go to state 116
+    ')'  shift, and go to state 129
+
+
+State 97
+
+  107 Q: NUM . $@38
+
+    $default  reduce using rule 106 ($@38)
+
+    $@38  go to state 111
+
+
+State 98
+
+  105 Q: ID . $@37 G
+
+    $default  reduce using rule 104 ($@37)
+
+    $@37  go to state 113
+
+
+State 99
+
+   87 assign: ID '=' $@30 E . ';'
+   90 E: E . '+' $@31 E
+   92  | E . '-' $@32 E
+
+    '+'  shift, and go to state 123
+    '-'  shift, and go to state 124
+    ';'  shift, and go to state 130
+
+
+State 100
+
+   88 assign: ID '(' Arg ')' . ';'
+
+    ';'  shift, and go to state 131
+
+
+State 101
+
+   40 S: printff $@13 '(' STRLT . ')' ';'
+
+    ')'  shift, and go to state 132
+
+
+State 102
+
+   53 S1: printff $@19 '(' STRLT . ')' ';'
+
+    ')'  shift, and go to state 133
+
+
+State 103
+
+   66 S2: printff $@25 '(' STRLT . ')' ';'
+
+    ')'  shift, and go to state 134
+
+
+State 104
+
+   42 S: scanff $@14 '(' STRLT . ',' '&' ID ')' ';'
+
+    ','  shift, and go to state 135
+
+
+State 105
+
+   55 S1: scanff $@20 '(' STRLT . ',' '&' ID ')' ';'
+
+    ','  shift, and go to state 136
+
+
+State 106
+
+   68 S2: scanff $@26 '(' STRLT . ',' '&' ID ')' ';'
+
+    ','  shift, and go to state 137
+
+
+State 107
+
+   31 U: RETURN NUM . $@12 ';'
+
+    $default  reduce using rule 30 ($@12)
+
+    $@12  go to state 138
+
+
+State 108
+
+   32 U: RETURN ID . ';'
+
+    ';'  shift, and go to state 139
+
+
+State 109
+
+    6 P: I M ID $@1 '(' $@2 R ')' $@3 '{' $@4 S $@5 U '}' .
+
+    $default  reduce using rule 6 (P)
+
+
+State 110
+
+   77 C: NE B .
+
+    $default  reduce using rule 77 (C)
+
+
+State 111
+
+  107 Q: NUM $@38 .
+
+    $default  reduce using rule 107 (Q)
+
+
+State 112
+
+   81 B: ID '=' . $@29 E
+
+    $default  reduce using rule 80 ($@29)
+
+    $@29  go to state 140
+
+
+State 113
+
+  105 Q: ID $@37 . G
+
+    '['  shift, and go to state 27
+
+    $default  reduce using rule 29 (G)
+
+    G  go to state 141
+
+
+State 114
+
+  103 Q: '(' $@36 . E ')'
+
+    NUM  shift, and go to state 97
+    ID   shift, and go to state 98
+    '('  shift, and go to state 89
+
+    E  go to state 142
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 115
+
+   75 C: C AND . B
+
+    NUM  shift, and go to state 85
+    TR   shift, and go to state 86
+    FL   shift, and go to state 87
+    ID   shift, and go to state 88
+    '('  shift, and go to state 89
+
+    B  go to state 143
+    E  go to state 92
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 116
+
+   76 C: C OR . B
+
+    NUM  shift, and go to state 85
+    TR   shift, and go to state 86
+    FL   shift, and go to state 87
+    ID   shift, and go to state 88
+    '('  shift, and go to state 89
+
+    B  go to state 144
+    E  go to state 92
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 117
+
+   48 S1: IF $@15 '(' C ')' . $@16 '{' $@17 S '}' $@18 EL
+
+    $default  reduce using rule 45 ($@16)
+
+    $@16  go to state 145
+
+
+State 118
+
+  108 relop: LE .
+
+    $default  reduce using rule 108 (relop)
+
+
+State 119
+
+  109 relop: GE .
+
+    $default  reduce using rule 109 (relop)
+
+
+State 120
+
+  110 relop: LT .
+
+    $default  reduce using rule 110 (relop)
+
+
+State 121
+
+  111 relop: GT .
+
+    $default  reduce using rule 111 (relop)
+
+
+State 122
+
+  112 relop: EQ .
+
+    $default  reduce using rule 112 (relop)
+
+
+State 123
+
+   90 E: E '+' . $@31 E
+
+    $default  reduce using rule 89 ($@31)
+
+    $@31  go to state 146
+
+
+State 124
+
+   92 E: E '-' . $@32 E
+
+    $default  reduce using rule 91 ($@32)
+
+    $@32  go to state 147
+
+
+State 125
+
+   79 B: E relop . E
+
+    NUM  shift, and go to state 97
+    ID   shift, and go to state 98
+    '('  shift, and go to state 89
+
+    E  go to state 148
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 126
+
+   95 F: F '*' . $@33 F
+
+    $default  reduce using rule 94 ($@33)
+
+    $@33  go to state 149
+
+
+State 127
+
+   97 F: F '/' . $@34 F
+
+    $default  reduce using rule 96 ($@34)
+
+    $@34  go to state 150
+
+
+State 128
+
+  100 T: T '^' . $@35 T
+
+    $default  reduce using rule 99 ($@35)
+
+    $@35  go to state 151
+
+
+State 129
+
+   61 S2: WHILE $@21 '(' C ')' . $@22 '{' $@23 S '}' $@24 EL
+
+    $default  reduce using rule 58 ($@22)
+
+    $@22  go to state 152
+
+
+State 130
+
+   87 assign: ID '=' $@30 E ';' .
+
+    $default  reduce using rule 87 (assign)
+
+
+State 131
+
+   88 assign: ID '(' Arg ')' ';' .
+
+    $default  reduce using rule 88 (assign)
+
+
+State 132
+
+   40 S: printff $@13 '(' STRLT ')' . ';'
+
+    ';'  shift, and go to state 153
+
+
+State 133
+
+   53 S1: printff $@19 '(' STRLT ')' . ';'
+
+    ';'  shift, and go to state 154
+
+
+State 134
+
+   66 S2: printff $@25 '(' STRLT ')' . ';'
+
+    ';'  shift, and go to state 155
+
+
+State 135
+
+   42 S: scanff $@14 '(' STRLT ',' . '&' ID ')' ';'
+
+    '&'  shift, and go to state 156
+
+
+State 136
+
+   55 S1: scanff $@20 '(' STRLT ',' . '&' ID ')' ';'
+
+    '&'  shift, and go to state 157
+
+
+State 137
+
+   68 S2: scanff $@26 '(' STRLT ',' . '&' ID ')' ';'
+
+    '&'  shift, and go to state 158
+
+
+State 138
+
+   31 U: RETURN NUM $@12 . ';'
+
+    ';'  shift, and go to state 159
+
+
+State 139
+
+   32 U: RETURN ID ';' .
+
+    $default  reduce using rule 32 (U)
+
+
+State 140
+
+   81 B: ID '=' $@29 . E
+
+    NUM  shift, and go to state 97
+    ID   shift, and go to state 98
+    '('  shift, and go to state 89
+
+    E  go to state 160
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 141
+
+  105 Q: ID $@37 G .
+
+    $default  reduce using rule 105 (Q)
+
+
+State 142
+
+   90 E: E . '+' $@31 E
+   92  | E . '-' $@32 E
+  103 Q: '(' $@36 E . ')'
+
+    '+'  shift, and go to state 123
+    '-'  shift, and go to state 124
+    ')'  shift, and go to state 161
+
+
+State 143
+
+   75 C: C AND B .
+
+    $default  reduce using rule 75 (C)
+
+
+State 144
+
+   76 C: C OR B .
+
+    $default  reduce using rule 76 (C)
+
+
+State 145
+
+   48 S1: IF $@15 '(' C ')' $@16 . '{' $@17 S '}' $@18 EL
+
+    '{'  shift, and go to state 162
+
+
+State 146
+
+   90 E: E '+' $@31 . E
+
+    NUM  shift, and go to state 97
+    ID   shift, and go to state 98
+    '('  shift, and go to state 89
+
+    E  go to state 163
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 147
+
+   92 E: E '-' $@32 . E
+
+    NUM  shift, and go to state 97
+    ID   shift, and go to state 98
+    '('  shift, and go to state 89
+
+    E  go to state 164
+    F  go to state 93
+    T  go to state 94
+    Q  go to state 95
+
+
+State 148
+
+   79 B: E relop E .
+   90 E: E . '+' $@31 E
+   92  | E . '-' $@32 E
+
+    '+'  shift, and go to state 123
+    '-'  shift, and go to state 124
+
+    $default  reduce using rule 79 (B)
+
+
+State 149
+
+   95 F: F '*' $@33 . F
+
+    NUM  shift, and go to state 97
+    ID   shift, and go to state 98
+    '('  shift, and go to state 89
+
+    F  go to state 165
+    T  go to state 94
+    Q  go to state 95
+
+
+State 150
+
+   97 F: F '/' $@34 . F
+
+    NUM  shift, and go to state 97
+    ID   shift, and go to state 98
+    '('  shift, and go to state 89
+
+    F  go to state 166
+    T  go to state 94
+    Q  go to state 95
+
+
+State 151
+
+  100 T: T '^' $@35 . T
+
+    NUM  shift, and go to state 97
+    ID   shift, and go to state 98
+    '('  shift, and go to state 89
+
+    T  go to state 167
+    Q  go to state 95
+
+
+State 152
+
+   61 S2: WHILE $@21 '(' C ')' $@22 . '{' $@23 S '}' $@24 EL
+
+    '{'  shift, and go to state 168
+
+
+State 153
+
+   40 S: printff $@13 '(' STRLT ')' ';' .
+
+    $default  reduce using rule 40 (S)
+
+
+State 154
+
+   53 S1: printff $@19 '(' STRLT ')' ';' .
+
+    $default  reduce using rule 53 (S1)
+
+
+State 155
+
+   66 S2: printff $@25 '(' STRLT ')' ';' .
+
+    $default  reduce using rule 66 (S2)
+
+
+State 156
+
+   42 S: scanff $@14 '(' STRLT ',' '&' . ID ')' ';'
+
+    ID  shift, and go to state 169
+
+
+State 157
+
+   55 S1: scanff $@20 '(' STRLT ',' '&' . ID ')' ';'
+
+    ID  shift, and go to state 170
+
+
+State 158
+
+   68 S2: scanff $@26 '(' STRLT ',' '&' . ID ')' ';'
+
+    ID  shift, and go to state 171
+
+
+State 159
+
+   31 U: RETURN NUM $@12 ';' .
+
+    $default  reduce using rule 31 (U)
+
+
+State 160
+
+   81 B: ID '=' $@29 E .
+   90 E: E . '+' $@31 E
+   92  | E . '-' $@32 E
+
+    '+'  shift, and go to state 123
+    '-'  shift, and go to state 124
+
+    $default  reduce using rule 81 (B)
+
+
+State 161
+
+  103 Q: '(' $@36 E ')' .
+
+    $default  reduce using rule 103 (Q)
+
+
+State 162
+
+   48 S1: IF $@15 '(' C ')' $@16 '{' . $@17 S '}' $@18 EL
+
+    $default  reduce using rule 46 ($@17)
+
+    $@17  go to state 172
+
+
+State 163
+
+   90 E: E . '+' $@31 E
+   90  | E '+' $@31 E .
+   92  | E . '-' $@32 E
+
+    $default  reduce using rule 90 (E)
+
+
+State 164
+
+   90 E: E . '+' $@31 E
+   92  | E . '-' $@32 E
+   92  | E '-' $@32 E .
+
+    $default  reduce using rule 92 (E)
+
+
+State 165
+
+   95 F: F . '*' $@33 F
+   95  | F '*' $@33 F .
+   97  | F . '/' $@34 F
+
+    $default  reduce using rule 95 (F)
+
+
+State 166
+
+   95 F: F . '*' $@33 F
+   97  | F . '/' $@34 F
+   97  | F '/' $@34 F .
+
+    $default  reduce using rule 97 (F)
+
+
+State 167
+
+  100 T: T . '^' $@35 T
+  100  | T '^' $@35 T .
+
+    '^'  shift, and go to state 128
+
+    $default  reduce using rule 100 (T)
+
+
+State 168
+
+   61 S2: WHILE $@21 '(' C ')' $@22 '{' . $@23 S '}' $@24 EL
+
+    $default  reduce using rule 59 ($@23)
+
+    $@23  go to state 173
+
+
+State 169
+
+   42 S: scanff $@14 '(' STRLT ',' '&' ID . ')' ';'
+
+    ')'  shift, and go to state 174
+
+
+State 170
+
+   55 S1: scanff $@20 '(' STRLT ',' '&' ID . ')' ';'
+
+    ')'  shift, and go to state 175
+
+
+State 171
+
+   68 S2: scanff $@26 '(' STRLT ',' '&' ID . ')' ';'
+
+    ')'  shift, and go to state 176
+
+
+State 172
+
+   48 S1: IF $@15 '(' C ')' $@16 '{' $@17 . S '}' $@18 EL
+
+    IF       shift, and go to state 45
+    INT      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    CHAR     shift, and go to state 7
+    WHILE    shift, and go to state 46
+    VOID     shift, and go to state 8
+    ID       shift, and go to state 47
+    printff  shift, and go to state 48
+    scanff   shift, and go to state 49
+
+    IF        [reduce using rule 43 (S)]
+    IF        [reduce using rule 56 (S1)]
+    IF        [reduce using rule 69 (S2)]
+    INT       [reduce using rule 43 (S)]
+    INT       [reduce using rule 56 (S1)]
+    INT       [reduce using rule 69 (S2)]
+    FLOAT     [reduce using rule 43 (S)]
+    FLOAT     [reduce using rule 56 (S1)]
+    FLOAT     [reduce using rule 69 (S2)]
+    CHAR      [reduce using rule 43 (S)]
+    CHAR      [reduce using rule 56 (S1)]
+    CHAR      [reduce using rule 69 (S2)]
+    WHILE     [reduce using rule 43 (S)]
+    WHILE     [reduce using rule 56 (S1)]
+    WHILE     [reduce using rule 69 (S2)]
+    VOID      [reduce using rule 43 (S)]
+    VOID      [reduce using rule 56 (S1)]
+    VOID      [reduce using rule 69 (S2)]
+    ID        [reduce using rule 43 (S)]
+    ID        [reduce using rule 56 (S1)]
+    ID        [reduce using rule 69 (S2)]
+    printff   [reduce using rule 43 (S)]
+    printff   [reduce using rule 56 (S1)]
+    printff   [reduce using rule 69 (S2)]
+    scanff    [reduce using rule 43 (S)]
+    scanff    [reduce using rule 56 (S1)]
+    scanff    [reduce using rule 69 (S2)]
+    '}'       reduce using rule 43 (S)
+    '}'       [reduce using rule 56 (S1)]
+    '}'       [reduce using rule 69 (S2)]
+    $default  reduce using rule 43 (S)
+
+    M       go to state 50
+    S       go to state 177
+    S1      go to state 52
+    S2      go to state 53
+    assign  go to state 54
+
+
+State 173
+
+   61 S2: WHILE $@21 '(' C ')' $@22 '{' $@23 . S '}' $@24 EL
+
+    IF       shift, and go to state 45
+    INT      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    CHAR     shift, and go to state 7
+    WHILE    shift, and go to state 46
+    VOID     shift, and go to state 8
+    ID       shift, and go to state 47
+    printff  shift, and go to state 48
+    scanff   shift, and go to state 49
+
+    IF        [reduce using rule 43 (S)]
+    IF        [reduce using rule 56 (S1)]
+    IF        [reduce using rule 69 (S2)]
+    INT       [reduce using rule 43 (S)]
+    INT       [reduce using rule 56 (S1)]
+    INT       [reduce using rule 69 (S2)]
+    FLOAT     [reduce using rule 43 (S)]
+    FLOAT     [reduce using rule 56 (S1)]
+    FLOAT     [reduce using rule 69 (S2)]
+    CHAR      [reduce using rule 43 (S)]
+    CHAR      [reduce using rule 56 (S1)]
+    CHAR      [reduce using rule 69 (S2)]
+    WHILE     [reduce using rule 43 (S)]
+    WHILE     [reduce using rule 56 (S1)]
+    WHILE     [reduce using rule 69 (S2)]
+    VOID      [reduce using rule 43 (S)]
+    VOID      [reduce using rule 56 (S1)]
+    VOID      [reduce using rule 69 (S2)]
+    ID        [reduce using rule 43 (S)]
+    ID        [reduce using rule 56 (S1)]
+    ID        [reduce using rule 69 (S2)]
+    printff   [reduce using rule 43 (S)]
+    printff   [reduce using rule 56 (S1)]
+    printff   [reduce using rule 69 (S2)]
+    scanff    [reduce using rule 43 (S)]
+    scanff    [reduce using rule 56 (S1)]
+    scanff    [reduce using rule 69 (S2)]
+    '}'       reduce using rule 43 (S)
+    '}'       [reduce using rule 56 (S1)]
+    '}'       [reduce using rule 69 (S2)]
+    $default  reduce using rule 43 (S)
+
+    M       go to state 50
+    S       go to state 178
+    S1      go to state 52
+    S2      go to state 53
+    assign  go to state 54
+
+
+State 174
+
+   42 S: scanff $@14 '(' STRLT ',' '&' ID ')' . ';'
+
+    ';'  shift, and go to state 179
+
+
+State 175
+
+   55 S1: scanff $@20 '(' STRLT ',' '&' ID ')' . ';'
+
+    ';'  shift, and go to state 180
+
+
+State 176
+
+   68 S2: scanff $@26 '(' STRLT ',' '&' ID ')' . ';'
+
+    ';'  shift, and go to state 181
+
+
+State 177
+
+   38 S: S . S
+   48 S1: IF $@15 '(' C ')' $@16 '{' $@17 S . '}' $@18 EL
+   51   | S . S
+   64 S2: S . S
+
+    IF       shift, and go to state 45
+    INT      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    CHAR     shift, and go to state 7
+    WHILE    shift, and go to state 46
+    VOID     shift, and go to state 8
+    ID       shift, and go to state 47
+    printff  shift, and go to state 48
+    scanff   shift, and go to state 49
+    '}'      shift, and go to state 182
+
+    IF       [reduce using rule 43 (S)]
+    IF       [reduce using rule 56 (S1)]
+    IF       [reduce using rule 69 (S2)]
+    INT      [reduce using rule 43 (S)]
+    INT      [reduce using rule 56 (S1)]
+    INT      [reduce using rule 69 (S2)]
+    FLOAT    [reduce using rule 43 (S)]
+    FLOAT    [reduce using rule 56 (S1)]
+    FLOAT    [reduce using rule 69 (S2)]
+    CHAR     [reduce using rule 43 (S)]
+    CHAR     [reduce using rule 56 (S1)]
+    CHAR     [reduce using rule 69 (S2)]
+    WHILE    [reduce using rule 43 (S)]
+    WHILE    [reduce using rule 56 (S1)]
+    WHILE    [reduce using rule 69 (S2)]
+    VOID     [reduce using rule 43 (S)]
+    VOID     [reduce using rule 56 (S1)]
+    VOID     [reduce using rule 69 (S2)]
+    ID       [reduce using rule 43 (S)]
+    ID       [reduce using rule 56 (S1)]
+    ID       [reduce using rule 69 (S2)]
+    printff  [reduce using rule 43 (S)]
+    printff  [reduce using rule 56 (S1)]
+    printff  [reduce using rule 69 (S2)]
+    scanff   [reduce using rule 43 (S)]
+    scanff   [reduce using rule 56 (S1)]
+    scanff   [reduce using rule 69 (S2)]
+    '}'      [reduce using rule 43 (S)]
+    '}'      [reduce using rule 56 (S1)]
+    '}'      [reduce using rule 69 (S2)]
+
+    M       go to state 50
+    S       go to state 68
+    S1      go to state 52
+    S2      go to state 53
+    assign  go to state 54
+
+
+State 178
+
+   38 S: S . S
+   51 S1: S . S
+   61 S2: WHILE $@21 '(' C ')' $@22 '{' $@23 S . '}' $@24 EL
+   64   | S . S
+
+    IF       shift, and go to state 45
+    INT      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    CHAR     shift, and go to state 7
+    WHILE    shift, and go to state 46
+    VOID     shift, and go to state 8
+    ID       shift, and go to state 47
+    printff  shift, and go to state 48
+    scanff   shift, and go to state 49
+    '}'      shift, and go to state 183
+
+    IF       [reduce using rule 43 (S)]
+    IF       [reduce using rule 56 (S1)]
+    IF       [reduce using rule 69 (S2)]
+    INT      [reduce using rule 43 (S)]
+    INT      [reduce using rule 56 (S1)]
+    INT      [reduce using rule 69 (S2)]
+    FLOAT    [reduce using rule 43 (S)]
+    FLOAT    [reduce using rule 56 (S1)]
+    FLOAT    [reduce using rule 69 (S2)]
+    CHAR     [reduce using rule 43 (S)]
+    CHAR     [reduce using rule 56 (S1)]
+    CHAR     [reduce using rule 69 (S2)]
+    WHILE    [reduce using rule 43 (S)]
+    WHILE    [reduce using rule 56 (S1)]
+    WHILE    [reduce using rule 69 (S2)]
+    VOID     [reduce using rule 43 (S)]
+    VOID     [reduce using rule 56 (S1)]
+    VOID     [reduce using rule 69 (S2)]
+    ID       [reduce using rule 43 (S)]
+    ID       [reduce using rule 56 (S1)]
+    ID       [reduce using rule 69 (S2)]
+    printff  [reduce using rule 43 (S)]
+    printff  [reduce using rule 56 (S1)]
+    printff  [reduce using rule 69 (S2)]
+    scanff   [reduce using rule 43 (S)]
+    scanff   [reduce using rule 56 (S1)]
+    scanff   [reduce using rule 69 (S2)]
+    '}'      [reduce using rule 43 (S)]
+    '}'      [reduce using rule 56 (S1)]
+    '}'      [reduce using rule 69 (S2)]
+
+    M       go to state 50
+    S       go to state 68
+    S1      go to state 52
+    S2      go to state 53
+    assign  go to state 54
+
+
+State 179
+
+   42 S: scanff $@14 '(' STRLT ',' '&' ID ')' ';' .
+
+    $default  reduce using rule 42 (S)
+
+
+State 180
+
+   55 S1: scanff $@20 '(' STRLT ',' '&' ID ')' ';' .
+
+    $default  reduce using rule 55 (S1)
+
+
+State 181
+
+   68 S2: scanff $@26 '(' STRLT ',' '&' ID ')' ';' .
+
+    $default  reduce using rule 68 (S2)
+
+
+State 182
+
+   48 S1: IF $@15 '(' C ')' $@16 '{' $@17 S '}' . $@18 EL
+
+    $default  reduce using rule 47 ($@18)
+
+    $@18  go to state 184
+
+
+State 183
+
+   61 S2: WHILE $@21 '(' C ')' $@22 '{' $@23 S '}' . $@24 EL
+
+    $default  reduce using rule 60 ($@24)
+
+    $@24  go to state 185
+
+
+State 184
+
+   48 S1: IF $@15 '(' C ')' $@16 '{' $@17 S '}' $@18 . EL
+
+    ELSE  shift, and go to state 186
+
+    $default  reduce using rule 73 (EL)
+
+    EL  go to state 187
+
+
+State 185
+
+   61 S2: WHILE $@21 '(' C ')' $@22 '{' $@23 S '}' $@24 . EL
+
+    ELSE  shift, and go to state 186
+
+    $default  reduce using rule 73 (EL)
+
+    EL  go to state 188
+
+
+State 186
+
+   72 EL: ELSE . $@27 '{' $@28 S '}'
+
+    $default  reduce using rule 70 ($@27)
+
+    $@27  go to state 189
+
+
+State 187
+
+   48 S1: IF $@15 '(' C ')' $@16 '{' $@17 S '}' $@18 EL .
+
+    $default  reduce using rule 48 (S1)
+
+
+State 188
+
+   61 S2: WHILE $@21 '(' C ')' $@22 '{' $@23 S '}' $@24 EL .
+
+    $default  reduce using rule 61 (S2)
+
+
+State 189
+
+   72 EL: ELSE $@27 . '{' $@28 S '}'
+
+    '{'  shift, and go to state 190
+
+
+State 190
+
+   72 EL: ELSE $@27 '{' . $@28 S '}'
+
+    $default  reduce using rule 71 ($@28)
+
+    $@28  go to state 191
+
+
+State 191
+
+   72 EL: ELSE $@27 '{' $@28 . S '}'
+
+    IF       shift, and go to state 45
+    INT      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    CHAR     shift, and go to state 7
+    WHILE    shift, and go to state 46
+    VOID     shift, and go to state 8
+    ID       shift, and go to state 47
+    printff  shift, and go to state 48
+    scanff   shift, and go to state 49
+
+    IF        [reduce using rule 43 (S)]
+    IF        [reduce using rule 56 (S1)]
+    IF        [reduce using rule 69 (S2)]
+    INT       [reduce using rule 43 (S)]
+    INT       [reduce using rule 56 (S1)]
+    INT       [reduce using rule 69 (S2)]
+    FLOAT     [reduce using rule 43 (S)]
+    FLOAT     [reduce using rule 56 (S1)]
+    FLOAT     [reduce using rule 69 (S2)]
+    CHAR      [reduce using rule 43 (S)]
+    CHAR      [reduce using rule 56 (S1)]
+    CHAR      [reduce using rule 69 (S2)]
+    WHILE     [reduce using rule 43 (S)]
+    WHILE     [reduce using rule 56 (S1)]
+    WHILE     [reduce using rule 69 (S2)]
+    VOID      [reduce using rule 43 (S)]
+    VOID      [reduce using rule 56 (S1)]
+    VOID      [reduce using rule 69 (S2)]
+    ID        [reduce using rule 43 (S)]
+    ID        [reduce using rule 56 (S1)]
+    ID        [reduce using rule 69 (S2)]
+    printff   [reduce using rule 43 (S)]
+    printff   [reduce using rule 56 (S1)]
+    printff   [reduce using rule 69 (S2)]
+    scanff    [reduce using rule 43 (S)]
+    scanff    [reduce using rule 56 (S1)]
+    scanff    [reduce using rule 69 (S2)]
+    '}'       reduce using rule 43 (S)
+    '}'       [reduce using rule 56 (S1)]
+    '}'       [reduce using rule 69 (S2)]
+    $default  reduce using rule 43 (S)
+
+    M       go to state 50
+    S       go to state 192
+    S1      go to state 52
+    S2      go to state 53
+    assign  go to state 54
+
+
+State 192
+
+   38 S: S . S
+   51 S1: S . S
+   64 S2: S . S
+   72 EL: ELSE $@27 '{' $@28 S . '}'
+
+    IF       shift, and go to state 45
+    INT      shift, and go to state 5
+    FLOAT    shift, and go to state 6
+    CHAR     shift, and go to state 7
+    WHILE    shift, and go to state 46
+    VOID     shift, and go to state 8
+    ID       shift, and go to state 47
+    printff  shift, and go to state 48
+    scanff   shift, and go to state 49
+    '}'      shift, and go to state 193
+
+    IF       [reduce using rule 43 (S)]
+    IF       [reduce using rule 56 (S1)]
+    IF       [reduce using rule 69 (S2)]
+    INT      [reduce using rule 43 (S)]
+    INT      [reduce using rule 56 (S1)]
+    INT      [reduce using rule 69 (S2)]
+    FLOAT    [reduce using rule 43 (S)]
+    FLOAT    [reduce using rule 56 (S1)]
+    FLOAT    [reduce using rule 69 (S2)]
+    CHAR     [reduce using rule 43 (S)]
+    CHAR     [reduce using rule 56 (S1)]
+    CHAR     [reduce using rule 69 (S2)]
+    WHILE    [reduce using rule 43 (S)]
+    WHILE    [reduce using rule 56 (S1)]
+    WHILE    [reduce using rule 69 (S2)]
+    VOID     [reduce using rule 43 (S)]
+    VOID     [reduce using rule 56 (S1)]
+    VOID     [reduce using rule 69 (S2)]
+    ID       [reduce using rule 43 (S)]
+    ID       [reduce using rule 56 (S1)]
+    ID       [reduce using rule 69 (S2)]
+    printff  [reduce using rule 43 (S)]
+    printff  [reduce using rule 56 (S1)]
+    printff  [reduce using rule 69 (S2)]
+    scanff   [reduce using rule 43 (S)]
+    scanff   [reduce using rule 56 (S1)]
+    scanff   [reduce using rule 69 (S2)]
+    '}'      [reduce using rule 43 (S)]
+    '}'      [reduce using rule 56 (S1)]
+    '}'      [reduce using rule 69 (S2)]
+
+    M       go to state 50
+    S       go to state 68
+    S1      go to state 52
+    S2      go to state 53
+    assign  go to state 54
+
+
+State 193
+
+   72 EL: ELSE $@27 '{' $@28 S '}' .
+
+    $default  reduce using rule 72 (EL)
