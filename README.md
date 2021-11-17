@@ -1,7 +1,7 @@
 # CD-Project
 This repository contains the files and folders of the project of course Compiler Design (UE18CS351).<br><br>
 
-### Directory Structure
+## Directory Structure
 
 ```bash
 ├── PHASE-1
@@ -18,15 +18,9 @@ This repository contains the files and folders of the project of course Compiler
     └── Phase-ICG
 ```
     
- .
-    ├── build                   # Compiled files (alternatively `dist`)
-    ├── docs                    # Documentation files (alternatively `doc`)
-    ├── src                     # Source files (alternatively `lib` or `app`)
-    ├── test                    # Automated tests (alternatively `spec` or `tests`)
-    ├── tools                   # Tools and utilities
-    ├── LICENSE
-    └── README.md
-       
-        
-        
+## Team Members:
+- Harsha Adimulam
+- Varun Kadam
+- Ishan Rai
+- K. Sreesh Reddy
 
