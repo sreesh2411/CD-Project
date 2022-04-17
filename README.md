@@ -23,7 +23,7 @@ The steps used to achieve this are:
         ├── DeadCode (Dead Code Elimination)
         ├── final 
         ├── practice files 
-    └── Phase-ICG
+    └── Phase-ICG (Intermediate Code Generation)
 ```
     
 ## Team Members:
